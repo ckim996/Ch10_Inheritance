@@ -40,13 +40,13 @@ public class PreferredCustomer extends Customer
 
     public int discountLevel(int dc)
     {
-        if(amount >= 500 || amount < 1000)
+        if(amount >= 500 && amount < 1000)
         {
             dc = 5;
-        }else if(amount >= 1000 || amount < 1500)
+        }else if(amount >= 1000 && amount < 1500)
         {
             dc = 6;
-        }else if(amount >= 1500 || amount < 2000)
+        }else if(amount >= 1500 && amount < 2000)
         {
             dc = 7;
         }else if(amount >= 2000)
@@ -58,13 +58,19 @@ public class PreferredCustomer extends Customer
         return dc;
     }
 
+    public double finalPrice(double dc)
+    {
+        dc = amount * (1 - (dc/100));
+        return dc;
+    }
+
     public String toString()
     {
-        DecimalFormat dc = new DecimalFormat("'$'0.00");
-        String str = "Customer paid: " + amount + " and should be getting " + discount + "% discount.";
+        DecimalFormat dc = new DecimalFormat("'$'00.00");
         int disc = getDiscount();
-        double finalPrice = amount - (amount * (disc/100));
-        str += "\nFinal price will be " + dc.format(finalPrice);
+        String str = "Customer paid: " + dc.format(amount) + " and should be getting " + disc + "% discount.";
+        //double finalPrice = amount - (amount * (disc/100));
+        str += "\nFinal price for " + getName() + " will be " + dc.format(finalPrice(disc));
         return str;
     }
 }
